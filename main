@@ -1,0 +1,80 @@
+#include <iostream>
+using namespace std;
+#include <cstdlib>
+#include <vector>
+#include <string>
+#include <ctime>
+
+int main()
+{
+	int nbDeMaisons(0), maisonMachine, maisonChoisie, i(1);
+	 string ouiNon;
+	vector <int> tablMaisonmachine;
+	srand(time(NULL));
+	std::cout << "Jeu du gangster" << std::endl;
+	std::cout << "Combien de maisons souhaitez vous avoir?" << std::endl;
+	std::cin >> nbDeMaisons;
+	do
+	{
+	do
+    {
+	while (nbDeMaisons<1)
+	{
+			std::cout << "Le nombre de maison est égale ou inférieur à 0" << std::endl << "Donner un nombre supérieur à 0" ;
+			std::cin >> nbDeMaisons;
+	}
+	//le nb de maison à été choisi
+	std::cout << "La machine a choisie sa maison"<< endl;
+	maisonMachine=(rand()%(nbDeMaisons-1))+1;
+	// La machine a choisie sa maison
+	if (i>1)
+	{
+		do {
+			maisonMachine=(rand()%(nbDeMaisons-1))+1;
+			}while (maisonMachine!=maisonMachine+1 || maisonMachine!=maisonMachine-1);
+	}
+	// si le premier tour est passé alors la maison de la machine doit se situer dans la maison inférieure ou la maison supérieure mais pas dans la même
+	tablMaisonmachine.push_back(maisonMachine);
+	// La maison de la machine est enregistrée
+    cout << "Choisissez la maison que vous voulez visiter!" << endl;
+    cin >> maisonChoisie;
+    // la maison fouillée
+    while (maisonChoisie<1 || maisonChoisie>nbDeMaisons)
+    {
+        if (maisonChoisie<1)
+        {
+            std::cout << "Attention nombre choisi inférieur a 1" << endl;
+        }
+        if (maisonChoisie>nbDeMaisons)
+        {
+            cout << "Attention nombre choisi supérieur au nombre de maisons:" << nbDeMaisons << endl;
+        }
+        cin >> maisonChoisie;
+    }
+    //test sur la maison fouillée si elle est compatible
+    i++;
+    }while (maisonChoisie!=maisonMachine);
+    // boucle pour fouiller une nouvelle fois si on a perdu
+    if (maisonChoisie==maisonMachine)
+    {
+        i=tablMaisonmachine.size();
+        cout << "Vous avez gagne en " << i << " tours, bravo!!!" << endl;
+        cout << "Ceci est la liste des maisons dans lesquels le gangster s'est cache"<< endl;
+        for (int t(0); t<tablMaisonmachine.size(); t++)
+        {
+            cout << tablMaisonmachine[t];
+            cout << ";" ;
+        }
+        cout << endl;
+	}
+	// vérification de la maison fouillée si c'est la même que celle de la machine
+    cout << "Veux tu recommencer? Si oui ecrit : oui , Si non ecrit : non" << endl;
+    cin >> ouiNon;
+    while (ouiNon!="oui" && ouiNon!="non")
+    {
+        cout << "Nous n'avons pas compris votre réponse: Si oui ecrit : true , Si non ecrit : false" << endl;
+        cin >> ouiNon;
+    }
+	}while (ouiNon=="oui");
+	return 0;
+}
