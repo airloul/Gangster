@@ -1,0 +1,94 @@
+#include <iostream>
+#include<cstdlib>
+#include<ctime>
+#include<string>
+#include<vector>
+using namespace std;
+
+int deplacement()
+{
+    double alea(0);
+    alea=rand()%2;
+    if(alea==0)
+    {
+        alea-=1;
+    }
+    return alea;
+}
+
+int maisonDepart(int maisonMax)
+{
+    int m;
+    while (m>maisonMax){
+    m=rand()%maisonMax+1;}
+    return m;
+}
+
+int main()
+{
+    srand(time(0))
+    cout<<"jeu le gendarme et le gangster"<<endl;
+    string reponse;
+    vector<int>maisonsDeFuite(0);/*creation tableau qui enregistre les maisons
+    où le gangster est passe*/
+    do//on revient ici si on veut recommencer
+    {
+        int maisonMax;
+        cout<<"Combien y a-t-il de maison ?"<<endl;
+        cin>>maisonMax;
+        int maisonGangster(0);
+        maisonGangster=maisonDepart(maisonMax);//la variable est maisonGangster
+        vector<int>maisonsDeFuite(1,maisonGangster);/*creation tableau qui enregistre les maisons
+        où le gangster est passe*/
+        //premiere position enregistrée
+        cout<<"le gangster est dans une maison"<<endl;
+        int maisonChoisie(0);
+        int essais(0);
+        int intermediaire(0);
+        do//debut boucle recherche gangster
+        {
+            cout<<"laquelle choisissez vous ?"<<endl;
+            cin>>maisonChoisie;
+            intermediaire=maisonChoisie;//on met intermediaire comme reference de maisonChoisie
+            if (intermediaire!=maisonGangster)
+            {
+                cout<<"non ce n'est pas la bonne le gangster se deplace"<<endl;
+                cout<<" "<<endl;
+
+
+                maisonGangster+=deplacement();//utilisation de la fonction deplacement qui donne 1 ou -1
+                if(maisonGangster==0)
+                {
+                    maisonGangster+=2;
+                }
+                if(maisonGangster>maisonMax)
+                {
+                    maisonGangster-=2;
+                }
+
+                maisonsDeFuite.push_back(maisonGangster);
+            }
+            maisonChoisie=0;
+            essais+=1;
+        }while (intermediaire!=maisonGangster);
+        int e(0);
+        for(e=0;e<2;e++)
+        {
+            cout<<" "<<endl;
+        }
+        cout<<"BRAVO"<<endl;
+         cout<<"c'est bien tu as trouve le gangster en "<<essais<<" essais."<<endl;
+         cout<<"voici les differentes cachettes du gangster"<<endl;
+         cout<<maisonsDeFuite.size()<<" maisons"<<endl;
+         for(int c(0);c<maisonsDeFuite.size();c++)
+         {
+             cout<<"-"<<maisonsDeFuite[c];
+         }
+         cout<<endl;
+        cout<<"veux-tu recommencer ?"<<endl;
+        cin>>reponse;
+    }while (reponse=="oui");
+    return 0;
+}
+la police et le gangster.cpp
+Ouvrir avec Google Docs
